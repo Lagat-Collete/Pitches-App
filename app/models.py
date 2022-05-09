@@ -1,3 +1,4 @@
+from turtle import title
 from . import db
 
 #...
@@ -18,15 +19,16 @@ class Categories(db.Model):
 
 class Pitches(db.Model):
      id = db.Column(db.Integer, primary_key = True)
-     
+     title = db.Column(db.String, nullable = False)
+     body = db.Column(db.Text, nullable = False )
      user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
      user = db.relationship('User', backref = db.backref('pitches'))
      category_id = db.Column(db.Integer, db.ForeignKey('categories_id'))
      category = db.relationship(Categories, backref=db.backref('pitches'))
      votes_id = db.Column(db.Integer, db.ForeignKey('votes.id'))
-     votes = db.relationship('votes', backref=db.backref('votes'))
+     votes = db.relationship('votes', backref=db.backref('pitches', lazy = True))
      comment_id = db.Column(db.Integer,db.ForeignKey('comments.id'))
-     comments = db.relationship('Comments', backref = db.backref('comments'))
+     comments = db.relationship('Comments', backref = db.backref('pitches'))
 
 
 

@@ -10,3 +10,5 @@ def create_app(config_name):
 
   # Initializing flask extensions
     db.init_app(app)
+
+    return app

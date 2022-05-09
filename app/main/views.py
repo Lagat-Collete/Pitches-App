@@ -1,6 +1,6 @@
-from flask import render_template
-from . import main_blueprint as main
+from crypt import methods
+from flask_login import login_required
 
-@main.route('/')
-def index():
-   return render('index.html')
+@main.route('/pitches/new/<int:id>', methods = ['GET','POST'])
+@login_required
+def new_pitches(id):

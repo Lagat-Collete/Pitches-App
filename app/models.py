@@ -19,7 +19,10 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(200))
-    pitches = db.relationship('Piches',backref = 'user', lazy = 'dynamic')
+    pitch = db.relationship('Pitches', backref='user', lazy = 'dynamic')
+    upvote = db.relationship('UpVotes', backref='user', lazy = 'dynamic')
+    downvote = db.relationship('DownVotes', backref='user', lazy = 'dynamic')
+    comment = db.relationship('Comments', backref='user', lazy = 'dynamic')
 
 @property
 def password(self):
@@ -38,10 +41,8 @@ class Categories(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
-    pitch = db.relationship('Pitches', backref='user', lazy = 'dynamic')
-    upvote = db.relationship('UpVotes', backref='user', lazy = 'dynamic')
-    downvote = db.relationship('DownVotes', backref='user', lazy = 'dynamic')
-    comment = db.relationship('Comments', backref='user', lazy = 'dynamic')
+    pitch = db.relationship('Pitches', backref = 'category', lazy = 'dynamic')
+
 
 
 class Pitches(db.Model):
@@ -50,18 +51,20 @@ class Pitches(db.Model):
      title = db.Column(db.String, nullable = False)
      body = db.Column(db.Text, nullable = False )
      user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-     category_id = db.Column(db.Integer, db.ForeignKey('categories_id'))
-     upvote_id = db.Column(db.Integer, db.ForeignKey('upvotes.id'))
-     downvote_id = db.Column(db.Integer, db.ForeignKey('downvotes.id'))
-     comment_id = db.Column(db.Integer,db.ForeignKey('comments.id'))
+     category = db.Column(db.Integer, db.ForeignKey('categories.id'))
+     upvote = db.relationship('UpVotes', backref = 'pitches', lazy = "dynamic")
+     downvote = db.relationship('DownVotes', backref = 'pitches', lazy = "dynamic")
+     comment = db.relationship('Comments', backref = 'pitches', lazy = "dynamic")
      
-
+     def save_pitch(self):
+           db.session.add(self)
+           db.session.commit()
 
 class UpVotes(db.Model):
      __tablename__ ="upvote"
      id = db.Column(db.Integer, primary_key = True)
      up_votes = db.Column(db.Integer)
-     pitches = db.relationship('Pitches', backref = 'upvote', lazy = 'dynamic')
+     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
      user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
 
@@ -69,7 +72,7 @@ class DownVotes(db.Model):
      __tablename__ ="downvote"
      id = db.Column(db.Integer, primary_key = True)
      down_votes = db.Column(db.Integer)
-     pitches = db.relationship('Pitches', backref = 'downvote', lazy = 'dynamic')
+     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
      user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
 
@@ -78,7 +81,7 @@ class Comments(db.Model):
      __tablename__= 'comments'
      id = db.Column(db.Integer, primary_key = True)
      comment = db.Column(db.text)
-     pitches = db.relationship('Pitches', backref = 'comment', lazy = 'dynamic')
+     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
      user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
 

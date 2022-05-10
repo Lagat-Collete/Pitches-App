@@ -1,5 +1,8 @@
+import os
+
+
 class Config:
-   SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Access@localhost/watchlist'
+   SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Access@localhost/pitches'
    UPLOADED_PHOTOS_DEST ='app/static/photos'
 #  email configurations
    MAIL_SERVER = 'smtp.googlemail.com'

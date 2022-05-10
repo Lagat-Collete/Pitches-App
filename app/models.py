@@ -19,6 +19,7 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(200))
+    pitches = db.relationship('Piches',backref = 'user', lazy = 'dynamic')
 
 @property
 def password(self):
@@ -34,30 +35,51 @@ def __repr__(self):
         return f'User {self.username}'
 
 class Categories(db.Model):
+    __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
+    pitch = db.relationship('Pitches', backref='user', lazy = 'dynamic')
+    upvote = db.relationship('UpVotes', backref='user', lazy = 'dynamic')
+    downvote = db.relationship('DownVotes', backref='user', lazy = 'dynamic')
+    comment = db.relationship('Comments', backref='user', lazy = 'dynamic')
+
 
 class Pitches(db.Model):
+     __tablename__ = 'pitches'
      id = db.Column(db.Integer, primary_key = True)
      title = db.Column(db.String, nullable = False)
      body = db.Column(db.Text, nullable = False )
      user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-     user = db.relationship('User', backref = db.backref('pitches'))
      category_id = db.Column(db.Integer, db.ForeignKey('categories_id'))
-     category = db.relationship(Categories, backref=db.backref('pitches'))
-     votes_id = db.Column(db.Integer, db.ForeignKey('votes.id'))
-     votes = db.relationship('votes', backref=db.backref('pitches', lazy = True))
+     upvote_id = db.Column(db.Integer, db.ForeignKey('upvotes.id'))
+     downvote_id = db.Column(db.Integer, db.ForeignKey('downvotes.id'))
      comment_id = db.Column(db.Integer,db.ForeignKey('comments.id'))
-     comments = db.relationship('Comments', backref = db.backref('pitches'))
+     
 
 
+class UpVotes(db.Model):
+     __tablename__ ="upvote"
+     id = db.Column(db.Integer, primary_key = True)
+     up_votes = db.Column(db.Integer)
+     pitches = db.relationship('Pitches', backref = 'upvote', lazy = 'dynamic')
+     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
-class Votes(db.Model):
+
+class DownVotes(db.Model):
+     __tablename__ ="downvote"
      id = db.Column(db.Integer, primary_key = True)
      down_votes = db.Column(db.Integer)
-     up_votes = db.Column(db.Integer)
+     pitches = db.relationship('Pitches', backref = 'downvote', lazy = 'dynamic')
+     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
+
+     
 class Comments(db.Model):
+     __tablename__= 'comments'
      id = db.Column(db.Integer, primary_key = True)
      comment = db.Column(db.text)
+     pitches = db.relationship('Pitches', backref = 'comment', lazy = 'dynamic')
+     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
+
 

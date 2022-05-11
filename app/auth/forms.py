@@ -6,14 +6,14 @@ from wtforms import ValidationError
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Your Email Address',validators=[Required(),Email()])
+    username = StringField('Username',validators=[Required()])
     password = PasswordField('Password',validators =[Required()])
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Sign In')
+    remember = BooleanField('Remember me!')
+    submit = SubmitField('Login')
 
 class RegistrationForm(FlaskForm):
     email = StringField('Your Email Address',validators=[Required(),Email()])
-    name = StringField('Enter your name',validators = [Required()])
+    username = StringField('Username',validators = [Required()])
     password = PasswordField('Password',validators = [Required(), EqualTo('password_confirm',message = 'Passwords must match')])
     password_confirm = PasswordField('Confirm Passwords',validators = [Required()])
     submit = SubmitField('Sign Up')
@@ -23,7 +23,7 @@ class RegistrationForm(FlaskForm):
                   raise ValidationError('There is an account with that email')
 
     def validate_name(self,data_field):
-        if User.query.filter_by(name = data_field.data).first():
-            raise ValidationError('That name is taken')
+        if User.query.filter_by(Username = data_field.data).first():
+            raise ValidationError('That username is taken')
 
 

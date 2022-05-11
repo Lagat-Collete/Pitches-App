@@ -1,12 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pitches</title>
-</head>
-<body>
-  
-</body>
-</html
+{% extends 'base.html'%}
+{% import 'macros.html' as macro %}
+
+{% block content %}
+    
+        <div  class="container">
+                <h2 class="text-center" color="black">Pitches</h2>
+            <ul>
+                <li >
+                    <a href="#all"><strong>Pitches</strong> </a>
+                </li>
+                <li>
+                  <a  href="#games">Games Pitches</a>
+                </li>
+                <li>
+                  <a href="#business">Busines Pitches</a>
+                </li>
+                <li>
+                  <a href="#education">Education Pitches</a>
+                </li>
+            </ul>
+            <div>
+                <div  class="container">
+                    {{ macro.display(pitches) }}
+                </div>
+                <div>
+                    {{ macro.display(games)}}
+                </div>
+                <div>
+                    {{ macro.display(business) }}
+                </div>
+                <div>
+                    {{ macro.display(education) }}
+                    
+                </div>
+            </div>
+        </div>
+{% endblock%}

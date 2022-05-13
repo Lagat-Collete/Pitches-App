@@ -1,34 +1,29 @@
+
 {% macro display(piches) %}
-<div class="container">
-		<div class="row">
-				{% if piches %}
-					{% for category in piches %}
-					<div class="col-md-6" >
-						<div class="card" style="color: black;">
-							<h5 class="card-header">{{category.title}}</h5>
-							<div class="card-body">
-									<p>{{category.post}}</p>
-									<p class="text-center"> Category: {{category.category}}</p>
-									<h5 color="black"> Posted by: {{category.user.username}}</h5>
-								<div><span>{{category.comment.count()}} Comments</span> <i class="fa-duotone fa-thumbs-down"></i>
-									<span><a href="{{url_for('main.like',id = category.id)}}"><i class="fa-duotone fa-thumbs-up" style="font-size: 15px;"></i></a> {{category.upvote.count()}}</span>
-									<span><a href="{{url_for('main.dislike',id = category.id)}}"><i class="fa-duotone fa-thumbs-down" style="font-size: 15px;"></i></a> {{category.downvote.count()}}</span></div>
-			
-								<a href="{{url_for('main.comment',pitch_id = category.id)}}" class="btn btn-success btn-sm"> Comment</a>
-							</div>
-						</div>
-					</div>
-					
-					{% endfor %}
-				{% else %}
-				<div class="col-md-6" >
-				<div class="card">
-					<div class="card-body">
-						<p class="card-title">Category has No post</p>
-					</div>
+{% for category in piches %}
+<div class="col-md-4 mt-3 d-inline-block" >
+	<div class="card p-3 m-2">
+		<h4>{{category.title}}</h4>
+		  <p>{{category.title}}</p>
+			<p> Category: {{category.category}}</p>
+			<p>Posted By:{{category.user.username}}</p>
+			<div class="d-flex justify-content-between">
+				<div class="d-flex justify-content-around">
+					<span>{{category.comment.count()}} Comments</span>
+						<span><a href="{{url_for('main.like',id = category.id)}}"><i class="fa-duotone fa-thumbs-up" style="font-size: 15px;"></i></a> {{category.upvote.count()}}</span>
+						<span><a href="{{url_for('main.dislike',id = category.id)}}"><i class="fa-duotone fa-thumbs-down" style="font-size: 15px;"></i></a> {{category.downvote.count()}}</span>
 				</div>
-				</div>
-				{% endif %}
-			</div>
-</div>
-{% endmacro %}
+				<a href="{{url_for('main.comment',pitch_id = category.id)}}" class="btn btn-success btn-sm"> Comment</a>
+			</div>			
+    </div>
+	  </div>
+		{% endfor %}
+		{% endmacro %}
+	
+
+
+
+
+
+
+		

@@ -65,18 +65,6 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
-class Categories(db.Model):
-    __tablename__ = 'categories'
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(300))
-    pitch = db.relationship('Pitch', backref = 'categories', lazy = 'dynamic')
-    
-    def save_category(self):
-           db.session.add(self)
-           db.session.commit()
-          
-    def __repr__(self):
-            return f'User {self.category}'
 
 
 class Pitch(db.Model):
@@ -86,7 +74,7 @@ class Pitch(db.Model):
      date = db.Column(db.DateTime(timezone =True), default=func.now())
      post = db.Column(db.String, nullable = False )
      user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-     category = db.Column(db.Integer, db.ForeignKey('categories.id'))
+     category = db.Column(db.String(255), index = True,nullable = False)
      comment = db.relationship('Comment', backref = 'pitch', lazy = "dynamic")
      upvote = db.relationship('UpVote', backref = 'pitch', lazy = "dynamic")
      downvote = db.relationship('DownVote', backref = 'pitch', lazy = "dynamic")
@@ -95,10 +83,7 @@ class Pitch(db.Model):
            db.session.add(self)
            db.session.commit()
 
-     def get_pitches(id):
-        pitches = Pitch.query.filter_by(category=id).all()
-        return pitches
-
+     
      def __repr__(self):
           return f'Pitch {self.post}'
 

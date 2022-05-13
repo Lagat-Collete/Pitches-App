@@ -3,36 +3,21 @@
 
 {% block content %}
     
-        <div  class="container">
-                <h2 class="text-center" color="black">Pitches</h2>
-            <ul>
-                <li >
-                    <a href="#all"><strong>Pitches</strong> </a>
-                </li>
-                <li>
-                  <a  href="#games">Games Pitches</a>
-                </li>
-                <li>
-                  <a href="#business">Busines Pitches</a>
-                </li>
-                <li>
-                  <a href="#education">Education Pitches</a>
-                </li>
-            </ul>
-            <div>
-                <div  class="container">
+        
+                
+                   <h3 style="text-align: center;">All Pitches</h3>
                     {{ macro.display(pitches) }}
-                </div>
-                <div>
+                
+                
+                
                     {{ macro.display(games)}}
-                </div>
-                <div>
+                
+                
+                    
                     {{ macro.display(business) }}
-                </div>
-                <div>
+                
+                
+                
                     {{ macro.display(education) }}
                     
-                </div>
-            </div>
-        </div>
 {% endblock%}

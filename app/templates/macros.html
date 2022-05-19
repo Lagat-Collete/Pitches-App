@@ -1,22 +1,27 @@
 
 {% macro display(piches) %}
 {% for category in piches %}
-<div class="col-md-4 mt-3 d-inline-block" >
+<div class="m-3">
+<div class="col-md-4 ml-3 d-inline-block " style="border: 1px solid;">
 	<div class="card p-3 m-2">
-		<h4>{{category.title}}</h4>
-		  <p>{{category.title}}</p>
-			<p> Category: {{category.category}}</p>
-			<p>Posted By:{{category.user.username}}</p>
+		<h4 style="font-weight: 700; color:black;">{{category.title}}</h4>
+		<hr>
+		  <h5>{{category.title}}</h5>
+			<br>
+			<p>Category: {{category.category}}</p>
+			<p style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; color:rgb(91, 91, 245);">Posted By:{{category.user.username}}</p>
 			<div class="d-flex justify-content-between">
 				<div class="d-flex justify-content-around">
 					<span>{{category.comment.count()}} Comments</span>
-						<span><a href="{{url_for('main.like',id = category.id)}}"><i class="fa-duotone fa-thumbs-up" style="font-size: 15px;"></i></a> {{category.upvote.count()}}</span>
-						<span><a href="{{url_for('main.dislike',id = category.id)}}"><i class="fa-duotone fa-thumbs-down" style="font-size: 15px;"></i></a> {{category.downvote.count()}}</span>
+						<button><span><a href="{{url_for('main.like',id = category.id)}}"><i class="fa-duotone fa-thumbs-up" style="font-size: 15px;"></i></a> {{category.upvote.count()}}</span></button>
+						<button><span><a href="{{url_for('main.dislike',id = category.id)}}"><i class="fa-duotone fa-thumbs-down" style="font-size: 15px;"></i></a> {{category.downvote.count()}}</span></button>
 				</div>
+				<br>
 				<a href="{{url_for('main.comment',pitch_id = category.id)}}" class="btn btn-success btn-sm"> Comment</a>
 			</div>			
     </div>
 	  </div>
+</div>
 		{% endfor %}
 		{% endmacro %}
 	

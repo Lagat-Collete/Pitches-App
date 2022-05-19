@@ -91,11 +91,10 @@ class Pitch(db.Model):
 class UpVote(db.Model):
      __tablename__ ="upvote"
      id = db.Column(db.Integer, primary_key = True)
-     up_votes = db.Column(db.Integer)
      pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
      user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
      
-     def save_upvote(self):
+     def save(self):
            db.session.add(self)
            db.session.commit()
 
@@ -105,13 +104,12 @@ class UpVote(db.Model):
         return upvote
 
      def __repr__(self):
-            return f'User {self.upvote}'
+          return f'User {self.upvote}'
 
 class DownVote(db.Model):
      __tablename__ ="downvote"
      
      id = db.Column(db.Integer, primary_key = True)
-     down_votes = db.Column(db.Integer)
      pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
      user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
 
@@ -120,12 +118,12 @@ class DownVote(db.Model):
            db.session.commit()
 
      @classmethod
-     def get_upvotes(cls,id):
-        upvote = DownVote.query.filter_by(pitch_id=id).all()
-        return upvote    
+     def get_downvotes(cls,id):
+        downvote = DownVote.query.filter_by(pitch_id=id).all()
+        return downvote    
 
      def __repr__(self):
-            return f'User {self.downvote}'
+          return f'User {self.downvote}'
      
 class Comment(db.Model):
      __tablename__= 'comments'
